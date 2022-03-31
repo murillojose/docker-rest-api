@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use('/api/task', require('./routers/taskRouter'));
+app.use('/api/campanha', require('./routers/campanhaRouter'));
+app.use('/api/user', require('./routers/userRouter'));
 
 //Porta de escuta do servidor
 app.listen(8080, async function () {

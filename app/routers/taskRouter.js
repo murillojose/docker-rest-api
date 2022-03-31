@@ -1,6 +1,6 @@
 const express = require('express');
 const { getTaskByDescription, insertTask, getAllTasks, deleteTask } = require('../services/taskService')
-router = express.Router();
+const router = express.Router();
 
 //GET param - Retorna o registro correspondente da ID informada
 router.get("/get/:descricao?", async function (req, res) {
