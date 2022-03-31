@@ -14,7 +14,7 @@ app.use('/api/campanha', require('./routers/campanhaRouter'));
 app.use('/api/user', require('./routers/userRouter'));
 
 //Porta de escuta do servidor
-app.listen(8080, async function () {
+app.listen(8080, async () => {
   console.log('Funcionando');
   await connect()
 });

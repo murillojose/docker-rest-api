@@ -4,7 +4,11 @@ const Campanha = require('./campanhaModel');
 const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
-  email: { type: String },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
   createdAt: { type: Date, default: Date.now },
   campanhas: [
     {

@@ -1,13 +1,30 @@
 const { User } = require('../models/userModel');
 
 async function createUser(user) {
-  var newUser = new User();
+  try {
+    var newUser = new User();
 
-  newUser.email = user.email;
+    newUser.email = user.email;
 
-  newUser.save();
+    await newUser.save();
 
-  return newUser;
+    return newUser;
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-module.exports = { createUser };
+async function includeCampaingUser(idUser, idCampanha) {
+  let user = await User.findOne(idUser);
+  user.campanhas.push(idCampanha);
+
+  await user.save();
+
+  return user;
+}
+
+async function getAllUsers() {
+  return User.find();
+}
+
+module.exports = { createUser, includeCampaingUser, getAllUsers };
