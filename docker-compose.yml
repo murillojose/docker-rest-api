@@ -6,10 +6,12 @@ mongo:
     - './data:/data/db'
 application: 
   build: .
-  command: bash -c "npm install; nodemon app.js --color=always"
+  command: bash -c "npm install; nodemon --inspect=0.0.0.0 app.js --color=always; "
+  # ENTRYPOINT: ["nodemon", "--inspect=0.0.0.0", "app.js", "--color=always"]
   ports:
-    - "8080:8080"
-    - "5858:5858"
+    - 8080:8080
+    - 5858:5858
+    - 9229:9229
   volumes:
     - ./app:/usr/src/app
   links:
