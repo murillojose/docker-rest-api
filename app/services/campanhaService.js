@@ -19,7 +19,7 @@ async function insertCampanha(campanha) {
     dataFim: campanha.dataFim,
   });
 
-  newCampanha.save();
+  await newCampanha.save();
 
   return newCampanha;
 }

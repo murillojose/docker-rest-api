@@ -10,6 +10,7 @@ const modelSchema = new Schema({
     unique: true
   },
   createdAt: { type: Date, default: Date.now },
+  dataEnvio: { type: Date, },
   campanhas: [
     {
       type: Schema.Types.ObjectId,
