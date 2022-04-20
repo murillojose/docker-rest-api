@@ -6,7 +6,6 @@ const emailService = require('../services/emailService');
 
 router.get('/init', async (req, res) => {
   const contadorEmailsEnviados = await emailService.enviaEmails();
-
   res.send(contadorEmailsEnviados);
 });
 

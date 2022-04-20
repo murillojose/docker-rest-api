@@ -9,7 +9,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use('/api/task', require('./routers/taskRouter'));
 app.use('/api/campanha', require('./routers/campanhaRouter'));
 app.use('/api/user', require('./routers/userRouter'));
 app.use('/api/email', require('./routers/emailRouter'));

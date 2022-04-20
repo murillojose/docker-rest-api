@@ -36,12 +36,12 @@ async function enviaEmails() {
 
   const emails = await montaArrayEmails(users);
 
-  emails.forEach(async email => {
+  for (let email in emails) {
     await enviaEmail(email, textEmail);
-    emailsEnviados++;
-  })
-
-  return emailsEnviados;
+    emailsEnviados += 1;
+  }
+  const resultEmails = { quantidadeEmailsEnviados: emailsEnviados };
+  return resultEmails;
 }
 
 async function enviaEmail(email, text) {
