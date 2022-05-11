@@ -1,4 +1,5 @@
 const { User } = require('../models/userModel');
+const { sendMail } = require('./sesService');
 
 function montaArrayEmails(users) {
   const arrEmail = users.map(user => user.email);
@@ -6,8 +7,9 @@ function montaArrayEmails(users) {
   return arrEmail;
 }
 
-async function buscaPrimeiros100Usuarios() {
-  const users = await User.find({ dataEnvio: null }).limit(100);
+async function buscaUsuarios(quantidade) {
+  console.log(quantidade)
+  const users = await User.find({ dataEnvio: null }).limit(quantidade);
 
   return users;
 }
@@ -28,11 +30,11 @@ function getTextoEmails() {
   Atenciosamente,`
 }
 
-async function enviaEmails() {
+async function enviaEmails(quantidade) {
   const textEmail = getTextoEmails();
   let emailsEnviados = 0;
 
-  const users = await buscaPrimeiros100Usuarios();
+  const users = await buscaUsuarios(quantidade);
 
   const emails = await montaArrayEmails(users);
 
@@ -45,7 +47,7 @@ async function enviaEmails() {
 }
 
 async function enviaEmail(email, text) {
-  console.log(email, text)
+  await sendMail(email, text, 'Informativo LGPD');
 }
 
 module.exports = { enviaEmails }

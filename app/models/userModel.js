@@ -9,6 +9,9 @@ const modelSchema = new Schema({
     required: true,
     unique: true
   },
+  dateCertificates: [
+    { type: Date }
+  ],
   createdAt: { type: Date, default: Date.now },
   dataEnvio: { type: Date, },
   campanhas: [

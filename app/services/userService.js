@@ -36,14 +36,24 @@ function importUsersByCSV(file) {
       const users = [];
       const duplicados = [];
       fs.createReadStream(file.filepath).pipe(csv()).on('data', data => {
-        const email = Object.values(data);
-        const userDuplicado = newUsers.find(user => user.email == email[0]);
+        const users = Object.values(data);
 
-        if (newUsers.length !== 0 && userDuplicado) {
-          const erroDuplicado = { mensagem: `erro, usuario com email ${email[0]} não incluido por duplicidade na planilha` }
-          duplicados.push(erroDuplicado);
+        const idxUser = newUsers.findIndex(user => user.email == users[0]);
+
+        if (newUsers.length !== 0 && idxUser >= 0) {
+
+          const user = newUsers[idxUser];
+
+          const idxData = user.dataCertificado.findIndex(data => data = users[1]);
+          if (idxData < 0) {
+            const erroDuplicado = { mensagem: `erro, usuario com email ${users[0]} não incluido por duplicidade na planilha` }
+            duplicados.push(erroDuplicado);
+          } else {
+            user.dataCertificado.push(users[1]);
+            newUsers.splice(idxUser, 1, user);
+          }
         } else {
-          const user = { email: email[0] };
+          const user = { email: users[0], dataCertificado: [users[1]] };
           newUsers.push(user)
         }
       }).on('end', async () => {
@@ -56,6 +66,15 @@ function importUsersByCSV(file) {
           } else {
             const usuario = new User();
             usuario.email = user.email;
+            const datasCertificados = user.dataCertificado.map(item => {
+              const data = item.split('-');
+              const year = data[2];
+              const month = data[1];
+              const day = data[0];
+              const newDate = new Date(year, month, day);
+              return newDate;
+            });
+            usuario.dateCertificates = [...datasCertificados]
             await usuario.save();
             users.push(user);
           }
